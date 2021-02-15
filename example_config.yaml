@@ -1,0 +1,11 @@
+bot_token: your bot token
+api_key: your YouTube API key
+maxResult: int
+telethon_settings:
+  session: your session name
+  auto_reconnect: True
+  retry_delay: 15
+  connection_retries: -1
+  request_retries: 5
+  api_id: your api id
+  api_hash: your api hash
