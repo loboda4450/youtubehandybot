@@ -14,7 +14,7 @@ session = aiohttp.ClientSession()
 f.close()
 
 
-async def items_request(type, search_query):
+async def items_request(type: str, search_query: str):
     async with session.get('https://www.googleapis.com/youtube/v3/search', params={'part': 'snippet',
                                                                                    'q': search_query,
                                                                                    'maxResult': maxResult,
@@ -24,7 +24,16 @@ async def items_request(type, search_query):
         return resp['items']
 
 
-@client.on(events.InlineQuery)
+@client.on(events.NewMessage(pattern='/start'))
+async def help_plox(event):
+    await event.reply('Available switches:'
+                      '\n.v for videos'
+                      '\n.p for playlists'
+                      '\n.c for channels'
+                      '\nPattern: `@youtubehandybot <switch> <search query>`')
+
+
+@client.on(events.InlineQuery())
 async def reply(event):
     if event.text.startswith('.v'):
         items = await items_request(type='video', search_query=event.text[2:])
